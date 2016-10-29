@@ -1,5 +1,5 @@
-function buildPrompt(movies) {
-  var promptData = {
+export function buildPrompt(movies) {
+  const promptData = {
       searchResults: movies,
       yesAction  : 'addMovie',
       yesResponse: 'Added ' + movies[0].original_title + ' (' + movies[0].year + ')' + ' to your list of movies to download.'
@@ -17,9 +17,8 @@ function buildPrompt(movies) {
   return promptData;
 }
 
-function sendSearchResponse(movies, movieName, resp) {
-
-  if(!movies || !movies.length > 0) {
+export function sendSearchResponse(movies, movieName, resp) {
+  if (!movies || !movies.length > 0) {
     return resp.say('No movie found for ' + movieName).send();
   }
 
@@ -30,29 +29,20 @@ function sendSearchResponse(movies, movieName, resp) {
     .send();
 }
 
-function formatSearchResults(movies) {
+export function formatSearchResults(movies) {
+  const newMovies = [];
 
-  var newMovies = [];
-
-    if (movies != undefined) {
-
-      for (var i = 0; i < movies.length; i++) {
-
-        newMovies.push({
-          original_title: movies[i].original_title,
-          in_library: movies[i].in_library,
-          year: movies[i].year,
-          titles: movies[i].titles,
-          imdb: movies[i].imdb
-        });
-      }
+  if (movies != undefined) {
+    for (let i = 0; i < movies.length; i++) {
+      newMovies.push({
+        original_title: movies[i].original_title,
+        in_library: movies[i].in_library,
+        year: movies[i].year,
+        titles: movies[i].titles,
+        imdb: movies[i].imdb
+      });
     }
+  }
 
-    return newMovies;
+  return newMovies;
 }
-
-module.exports = {
-  buildPrompt: buildPrompt,
-  sendSearchResponse: sendSearchResponse,
-  formatSearchResults: formatSearchResults
-};

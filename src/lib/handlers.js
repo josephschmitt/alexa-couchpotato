@@ -1,50 +1,49 @@
 'use strict';
 
-var CouchPotato = require('node-couchpotato');
-var utils = require('./utils.js');
+import CouchPotato from 'node-couchpotato';
+import utils from './utils.js';
 
-var WELCOME_DESCRIPTION = 'This skill allows you to manage your Couch Potato movie list.';
-var HELP_RESPONSE = ['You can ask Couch Potato about the movies in your queue or add new movies',
+const WELCOME_DESCRIPTION = 'This skill allows you to manage your Couch Potato movie list.';
+const HELP_RESPONSE = ['You can ask Couch Potato about the movies in your queue or add new movies',
     'to it. Try asking "is The Godfather on the list?". If it\'s not and you want to add it, try',
     'saying "add The Godfather".'].join(' ');
 var CANCEL_RESPONSE = 'Exiting Couch Potato';
 
-var config = require('dotenv').config();
-var cp = new CouchPotato({
+const config = require('dotenv').config();
+const cp = new CouchPotato({
   url: config.CP_URL,
   apikey: config.CP_API_KEY,
   debug:true
 });
 
-function handleLaunchIntent(req, resp) {
+export default function handleLaunchIntent(req, resp) {
   resp
     .say(WELCOME_DESCRIPTION)
     .say(HELP_RESPONSE)
     .send();
 }
 
-function handleFindMovieIntent(req, resp) {
-  var movieName = req.slot('movieName');
+export function handleFindMovieIntent(req, resp) {
+  const movieName = req.slot('movieName');
 
   cp.movie.list({search: movieName, limit_offset: 5}).then(function (searchResp) {
-    var movies = searchResp.movies;
-    var result;
+    const movies = searchResp.movies;
 
     if (!movies || !movies.length) {
       resp.say('Couldn\'t find ' + movieName + ' queued for download. ');
 
       cp.movie.search(movieName).then(function (searchResults) {
-        utils.sendSearchResponse(searchResults, resp);
+	utils.sendSearchResponse(searchResults, resp);
       });
     }
     else {
-      result = movies[0].info;
+      const result = movies[0].info;
       resp
-        .say([
-          'It looks like', result.original_title,
-          '(' + result.year + ')', 'is already on your list.'
-        ].join(' '))
-        .send();
+	.say([
+	  'It looks like', result.original_title,
+	  '(' + result.year + ')', 'is already on your list.'
+	].join(' '))
+	.send();
     }
   });
 
@@ -52,7 +51,7 @@ function handleFindMovieIntent(req, resp) {
   return false;
 }
 
-function handleAddMovieIntent(req, resp) {
+export function handleAddMovieIntent(req, resp) {
   var movieName = req.slot('movieName');
 
  cp.movie.search(movieName,5).then(function (movies) {
@@ -64,24 +63,23 @@ function handleAddMovieIntent(req, resp) {
   return false;
 }
 
-function handleYesIntent(req, resp) {
-  var promptData = req.session('promptData');
-  var movie;
+export function handleYesIntent(req, resp) {
+  const promptData = req.session('promptData');
 
   if (!promptData) {
     console.log('Got a AMAZON.YesIntent but no promptData. Ending session.');
     resp.send();
   }
   else if (promptData.yesAction === 'addMovie') {
-    movie = promptData.searchResults[0];
+    const movie = promptData.searchResults[0];
 
     cp.movie.add({
       title: movie.titles[0],
       identifier: movie.imdb
     }).then(function () {
       resp
-        .say(promptData.yesResponse)
-        .send();
+	.say(promptData.yesResponse)
+	.send();
     });
 
     //Async response
@@ -94,8 +92,8 @@ function handleYesIntent(req, resp) {
   }
 }
 
-function handleNoIntent(req, resp) {
-  var promptData = req.session('promptData');
+export function handleNoIntent(req, resp) {
+  const promptData = req.session('promptData');
 
   if (!promptData) {
     console.log('Got a AMAZON.YesIntent but no promptData. Ending session.');
@@ -105,7 +103,7 @@ function handleNoIntent(req, resp) {
     resp.say(promptData.noResponse).send();
   }
   else if (promptData.noAction === 'suggestNextMovie') {
-    var movies = promptData.searchResults;
+    const movies = promptData.searchResults;
     resp
       .say(promptData.noResponse)
       .session('promptData', utils.buildPrompt(movies.slice(1)))
@@ -119,14 +117,10 @@ function handleNoIntent(req, resp) {
   }
 }
 
-function handleCancelIntent(req, resp) {
+export function handleCancelIntent(req, resp) {
   resp.say(CANCEL_RESPONSE).shouldEndSession(true).send();
 }
 
-module.exports = {
-  handleFindMovieIntent: handleFindMovieIntent,
-  handleAddMovieIntent: handleAddMovieIntent,
-  handleYesIntent: handleYesIntent,
-  handleNoIntent: handleNoIntent,
-  handleCancelIntent: handleCancelIntent
-};
+export function handleHelpIntent(req, resp) {
+  resp.say(HELP_RESPONSE).send();
+}
