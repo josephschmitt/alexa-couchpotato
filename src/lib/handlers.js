@@ -1,17 +1,18 @@
 'use strict';
 
 import CouchPotato from 'node-couchpotato';
+
 import {
   buildPrompt,
   sendSearchResponse,
   formatSearchResults
 } from './utils.js';
 
-const WELCOME_DESCRIPTION = 'This skill allows you to manage your Couch Potato movie list.';
-const HELP_RESPONSE = ['You can ask Couch Potato about the movies in your queue or add new movies',
-    'to it. Try asking "is The Godfather on the list?". If it\'s not and you want to add it, try',
-    'saying "add The Godfather".'].join(' ');
-var CANCEL_RESPONSE = 'Exiting Couch Potato';
+import {
+  WELCOME_DESCRIPTION,
+  HELP_RESPONSE,
+  CANCEL_RESPONSE
+} from './responses.js';
 
 const config = require('dotenv').config();
 const cp = new CouchPotato({
@@ -34,7 +35,7 @@ export function handleFindMovieIntent(req, resp) {
     const movies = searchResp.movies;
 
     if (!movies || !movies.length) {
-      resp.say('Couldn\'t find ' + movieName + ' queued for download. ');
+      resp.say(`Couldn't find ${movieName} queued for download. `);
 
       cp.movie.search(movieName).then(function (searchResults) {
         sendSearchResponse(searchResults, resp);
@@ -43,10 +44,7 @@ export function handleFindMovieIntent(req, resp) {
     else {
       const result = movies[0].info;
       resp
-        .say([
-          'It looks like', result.original_title,
-          '(' + result.year + ')', 'is already on your list.'
-        ].join(' '))
+        .say(`It looks like ${result.original_title} (${result.year}) is already on your list.`)
         .send();
     }
   });
@@ -90,7 +88,7 @@ export function handleYesIntent(req, resp) {
     return false;
   }
   else {
-    console.log("Got an unexpected yesAction. PromptData:");
+    console.log('Got an unexpected yesAction. PromptData:');
     console.log(promptData);
     resp.send();
   }
@@ -115,7 +113,7 @@ export function handleNoIntent(req, resp) {
       .send();
   }
   else {
-    console.log("Got an unexpected noAction. PromptData:");
+    console.log('Got an unexpected noAction. PromptData:');
     console.log(promptData);
     resp.send();
   }
