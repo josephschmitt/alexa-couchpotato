@@ -33,17 +33,17 @@ export function handleFindMovieIntent(req, resp) {
       resp.say('Couldn\'t find ' + movieName + ' queued for download. ');
 
       cp.movie.search(movieName).then(function (searchResults) {
-	utils.sendSearchResponse(searchResults, resp);
+        utils.sendSearchResponse(searchResults, resp);
       });
     }
     else {
       const result = movies[0].info;
       resp
-	.say([
-	  'It looks like', result.original_title,
-	  '(' + result.year + ')', 'is already on your list.'
-	].join(' '))
-	.send();
+        .say([
+          'It looks like', result.original_title,
+          '(' + result.year + ')', 'is already on your list.'
+        ].join(' '))
+        .send();
     }
   });
 
@@ -54,10 +54,10 @@ export function handleFindMovieIntent(req, resp) {
 export function handleAddMovieIntent(req, resp) {
   var movieName = req.slot('movieName');
 
- cp.movie.search(movieName,5).then(function (movies) {
-   movies = utils.formatSearchResults(movies);
-   utils.sendSearchResponse(movies, movieName, resp);
- });
+  cp.movie.search(movieName, 5).then(function (movies) {
+    movies = utils.formatSearchResults(movies);
+    utils.sendSearchResponse(movies, movieName, resp);
+  });
 
   //Async response
   return false;
@@ -78,8 +78,8 @@ export function handleYesIntent(req, resp) {
       identifier: movie.imdb
     }).then(function () {
       resp
-	.say(promptData.yesResponse)
-	.send();
+        .say(promptData.yesResponse)
+        .send();
     });
 
     //Async response
@@ -96,7 +96,7 @@ export function handleNoIntent(req, resp) {
   const promptData = req.session('promptData');
 
   if (!promptData) {
-    console.log('Got a AMAZON.YesIntent but no promptData. Ending session.');
+    console.log('Got a AMAZON.NoIntent but no promptData. Ending session.');
     resp.send();
   }
   else if (promptData.noAction === 'endSession') {
