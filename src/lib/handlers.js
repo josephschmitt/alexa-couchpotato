@@ -1,7 +1,11 @@
 'use strict';
 
 import CouchPotato from 'node-couchpotato';
-import utils from './utils.js';
+import {
+  buildPrompt,
+  sendSearchResponse,
+  formatSearchResults
+} from './utils.js';
 
 const WELCOME_DESCRIPTION = 'This skill allows you to manage your Couch Potato movie list.';
 const HELP_RESPONSE = ['You can ask Couch Potato about the movies in your queue or add new movies',
@@ -33,7 +37,7 @@ export function handleFindMovieIntent(req, resp) {
       resp.say('Couldn\'t find ' + movieName + ' queued for download. ');
 
       cp.movie.search(movieName).then(function (searchResults) {
-        utils.sendSearchResponse(searchResults, resp);
+        sendSearchResponse(searchResults, resp);
       });
     }
     else {
@@ -55,8 +59,8 @@ export function handleAddMovieIntent(req, resp) {
   var movieName = req.slot('movieName');
 
   cp.movie.search(movieName, 5).then(function (movies) {
-    movies = utils.formatSearchResults(movies);
-    utils.sendSearchResponse(movies, movieName, resp);
+    movies = formatSearchResults(movies);
+    sendSearchResponse(movies, movieName, resp);
   });
 
   //Async response
@@ -106,7 +110,7 @@ export function handleNoIntent(req, resp) {
     const movies = promptData.searchResults;
     resp
       .say(promptData.noResponse)
-      .session('promptData', utils.buildPrompt(movies.slice(1)))
+      .session('promptData', buildPrompt(movies.slice(1)))
       .shouldEndSession(false)
       .send();
   }
