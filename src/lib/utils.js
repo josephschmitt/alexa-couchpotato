@@ -30,19 +30,17 @@ export function sendSearchResponse(movies, movieName, resp) {
 }
 
 export function formatSearchResults(movies) {
-  const newMovies = [];
-
-  if (movies != undefined) {
-    for (let i = 0; i < movies.length; i++) {
-      newMovies.push({
-        original_title: movies[i].original_title,
-        in_library: movies[i].in_library,
-        year: movies[i].year,
-        titles: movies[i].titles,
-        imdb: movies[i].imdb
-      });
-    }
+  if (movies) {
+    return movies.map((movie) => {
+      return {
+        original_title: movie.original_title,
+        in_library: movie.in_library,
+        year: movie.year,
+        titles: movie.titles,
+        imdb: movie.imdb
+      }
+    });
   }
 
-  return newMovies;
+  return [];
 }
