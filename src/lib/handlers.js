@@ -54,7 +54,7 @@ export function handleFindMovieIntent(req, resp) {
 }
 
 export function handleAddMovieIntent(req, resp) {
-  var movieName = req.slot('movieName');
+  const movieName = req.slot('movieName');
 
   cp.movie.search(movieName, 5).then(function (movies) {
     movies = formatSearchResults(movies);
