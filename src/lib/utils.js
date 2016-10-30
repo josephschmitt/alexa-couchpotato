@@ -17,6 +17,13 @@ export function buildPrompt(movies) {
   return promptData;
 }
 
+export function buildMovieQuery(req) {
+  const movieName = req.slot('movieName');
+  const releaseDate = parseDate(req.slot('releaseDate'));
+
+  return releaseDate ? `${movieName} ${releaseDate.year}` : movieName;
+}
+
 export function sendSearchResponse(movies, movieName, resp) {
   if (!movies || !movies.length > 0) {
     return resp.say('No movie found for ' + movieName).send();
