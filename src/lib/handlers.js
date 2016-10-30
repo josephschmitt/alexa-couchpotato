@@ -63,7 +63,7 @@ export function handleAddMovieIntent(req, resp) {
 
   // Grab more results since we'll end up filtering by date
   cp.movie.search(movieName, NUM_RESULTS * 2).then(function (movies) {
-    movies = formatSearchResults(movies, releaseDate ? filterFn : undefined);
+    movies = formatSearchResults(movies);
     sendSearchResponse(movies, movieName, resp);
   });
 

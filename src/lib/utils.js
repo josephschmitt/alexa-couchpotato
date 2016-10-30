@@ -29,7 +29,7 @@ export function sendSearchResponse(movies, movieName, resp) {
     .send();
 }
 
-export function formatSearchResults(movies, filterFn = () => { return true }) {
+export function formatSearchResults(movies) {
   if (movies) {
     return movies.map((movie) => {
       return {
@@ -39,7 +39,7 @@ export function formatSearchResults(movies, filterFn = () => { return true }) {
         titles: movie.titles,
         imdb: movie.imdb
       }
-    }).filter(filterFn);
+    });
   }
 
   return [];
