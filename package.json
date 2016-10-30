@@ -5,8 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "build": "babel src -d dist",
-    "lambda": "cp -r {.env,deploy.env,package.json} dist/; cd dist; npm install --production; bestzip ../lambda.zip * .env;",
-    "bundle": "npm run build; npm run lambda;"
+    "zip": "cp -r {.env,deploy.env,package.json} dist/; cd dist; npm install --production; bestzip ../lambda.zip * .env;",
+    "bundle": "npm run build; npm run zip;",
+    "test-lambda": "npm run build; node-lambda run --handler dist/index.handler"
   },
   "author": "Joe Schmitt",
   "license": "MIT",
