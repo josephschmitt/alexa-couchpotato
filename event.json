@@ -14,13 +14,18 @@
     "requestId": "EdwRequestId.1234",
     "timestamp": "2016-01-01T00:00:00Z",
     "intent": {
-      "name": "FindMovie",
+      "name": "AddMovie",
       "slots": {
+        "releaseDate": {
+          "name": "releaseDate",
+          "value": "1972"
+        },
         "movieName": {
           "name": "movieName",
           "value": "the godfather"
         }
       }
     }
-  }
+  },
+  "version": "1.0"
 }
