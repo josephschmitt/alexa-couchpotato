@@ -33,6 +33,20 @@ AddMovie add {The Avengers|movieName} released in {releaseDate}
 AddMovie add {The Dark Knight|movieName} released in {releaseDate}
 AddMovie add {Live or Let Die|movieName} released in {releaseDate}
 
+AddMovie download {The Godfather|movieName}
+AddMovie download {Star Wars|movieName}
+AddMovie download {Star Wars Episode Four A New Hope|movieName}
+AddMovie download {The Avengers|movieName}
+AddMovie download {The Dark Knight|movieName}
+AddMovie download {Live or Let Die|movieName}
+
+AddMovie download {The Godfather|movieName} year {releaseDate}
+AddMovie download {Star Wars|movieName} year {releaseDate}
+AddMovie download {Star Wars Episode Four A New Hope|movieName} year {releaseDate}
+AddMovie download {The Avengers|movieName} year {releaseDate}
+AddMovie download {The Dark Knight|movieName} year {releaseDate}
+AddMovie download {Live or Let Die|movieName} year {releaseDate}
+
 FindMovie is {The Godfather|movieName} on the list
 FindMovie is {Star Wars|movieName} on the list
 FindMovie is {Star Wars Episode Four A New Hope|movieName} on the list

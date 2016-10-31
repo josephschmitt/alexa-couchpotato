@@ -1,0 +1,42 @@
+{
+  "intents": [
+    {
+      "intent": "AddMovie",
+      "slots": [
+        {
+          "name": "movieName",
+          "type": "LITERAL"
+        },
+        {
+          "name": "releaseDate",
+          "type": "AMAZON.DATE"
+        }
+      ]
+    },
+    {
+      "intent": "FindMovie",
+      "slots": [
+        {
+          "name": "movieName",
+          "type": "LITERAL"
+        },
+        {
+          "name": "releaseDate",
+          "type": "AMAZON.DATE"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.YesIntent"
+    },
+    {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
