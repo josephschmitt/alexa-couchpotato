@@ -60,6 +60,7 @@ export function handleFindMovieIntent(req, resp) {
 }
 
 export function handleAddMovieIntent(req, resp) {
+  const movieName = req.slot('movieName');
   cp.movie.search(buildMovieQuery(req), NUM_RESULTS).then(function (movies) {
     movies = formatSearchResults(movies);
     sendSearchResponse(movies, movieName, resp);
