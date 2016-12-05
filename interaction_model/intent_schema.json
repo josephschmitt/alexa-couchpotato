@@ -5,11 +5,11 @@
       "slots": [
         {
           "name": "movieName",
-          "type": "AMAZON.LITERAL"
+          "type": "LITERAL"
         },
         {
           "name": "releaseDate",
-          "type": "AMAZON.DATE"
+          "type": "DATE"
         }
       ]
     },
@@ -18,11 +18,11 @@
       "slots": [
         {
           "name": "movieName",
-          "type": "AMAZON.LITERAL"
+          "type": "LITERAL"
         },
         {
           "name": "releaseDate",
-          "type": "AMAZON.DATE"
+          "type": "DATE"
         }
       ]
     },
