@@ -5,7 +5,8 @@
       "port": 5050,
       "apiKey": "",
       "username": "",
-      "password": ""
+      "password": "",
+      "ssl":"false"
     }
   }
 }
