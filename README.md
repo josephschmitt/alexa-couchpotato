@@ -1,4 +1,10 @@
-# Couch Potato Alexa Skill
+# Deprecation Notice
+
+This project has been deprecated in favor of [Libby](https://josephschmitt.github.io/alexa-libby/),
+my updated fork of this project that's much more powerful, stable, and feature-rich. You should
+seriously consider using libby instead of this project.
+
+# Couch Potato Alexa Skill [DEPRECATED]
 
 This is a skill built for Amazon's Alexa service that tells you about your Couch Potato queue. It
 allows you to ask Alexa the following:
